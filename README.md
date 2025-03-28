@@ -104,7 +104,7 @@ O **No Milímetro Planejados** é uma aplicação desenvolvida para atender às 
 ## Instalação
 ```sh
 # 1. Clonar o Repositório
-git clone https://github.com/seu-repositorio/no-milimetro-planejados.git
+git clone https://github.com/EnzoVieira3012/NoMilimetroPlanejado.git
 cd no-milimetro-planejados
 
 # 2. Instalar Dependências
