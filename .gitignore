@@ -1,0 +1,198 @@
+# Diretórios e arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+.AppleDouble
+.LSOverride
+*.Spotlight-V100
+*.Trashes
+*.TemporaryItems
+*.VolumeIcon.icns
+.Spotlight-V100
+.Trashes
+*.fseventsd
+*.com.apple.timemachine.donotpresent
+._*
+
+# Arquivos de log e dados temporários
+*.log
+*.lock
+*.tmp
+*.temp
+*.swp
+*.swo
+*.swn
+*.bak
+*.sql
+*.sqlite
+
+# Arquivos específicos do IDE
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.vscode/
+*.code-workspace
+*.launch/
+*.iml
+*.nbproject/
+
+# Diretórios do Laravel
+/vendor/
+public/storage
+storage/*.key
+.env
+.env.*
+.env.local
+.env.production
+.env.testing
+.phpunit.result.cache
+homestead.yaml
+Homestead.yaml
+Homestead.json
+
+# Diretórios de cache
+bootstrap/cache/
+storage/framework/*
+storage/logs/*
+storage/debugbar/*
+node_modules/
+npm-debug.log
+npm-error.log
+
+# Arquivos SCSS e CSS gerados
+*.sass-cache
+*.scssc
+*.css.map
+*.css.gz
+*.css.min
+
+# Compilações de produção
+/public/css/*
+/public/js/*
+/public/images/*
+/public/mix-manifest.json
+/public/hot
+/public/build/
+
+# Arquivos relacionados ao Composer
+composer.lock
+composer.phar
+
+# Arquivos relacionados ao Node.js e NPM/Yarn
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.npm/
+.npmrc
+.pnpm-debug.log
+.pnpm-store/
+.nvmrc
+
+# Arquivos de teste e relatórios
+/tests/_output/
+/tests/_support/_generated/
+tests/_support/_generated/
+tests/_output/
+phpunit.result.cache
+coverage/
+coverage.xml
+.php_cs.cache
+.phpunit.result.cache
+build/
+debug.log
+phpunit.xml
+
+# Arquivos relacionados ao Laravel Mix ou Vite
+/public/mix-manifest.json
+/public/vite-manifest.json
+/public/hot
+/.vite/
+.vitepress/
+dist/
+
+# Arquivos de configuração do sistema
+*.local
+*.env.local.php
+*.env.php
+*.env.testing.php
+*.env.production.php
+
+# Arquivos de chaves e credenciais
+*.key
+*.pem
+*.crt
+*.cert
+*.p12
+*.cer
+
+# Outros arquivos de configuração e temporários
+*.bak
+*.swp
+*.swo
+*.swn
+*.tmp
+*.temp
+*.backup
+*.orig
+*.rej
+*.log
+
+# Arquivos de configuração específicos do Laravel
+.env
+.env.*
+.env.local
+.env.backup
+.env.testing
+.env.production
+.env.development
+.env.example
+.idea
+.vscode
+Homestead.yaml
+Homestead.json
+
+# Configurações de CI/CD
+/.github/
+/.gitlab/
+/.circleci/
+/.travis.yml
+.Dockerfile
+docker-compose.yml
+
+# Chaves SSH e arquivos sensíveis
+*.key
+*.pem
+*.crt
+*.cert
+*.p12
+*.cer
+
+# Diretórios e arquivos temporários do sistema operacional
+*.swp
+*.swo
+*.swn
+*.DS_Store
+*.Thumbs.db
+*.AppleDouble
+*.LSOverride
+Icon?
+*.TemporaryItems
+*.VolumeIcon.icns
+*.Spotlight-V100
+*.Trashes
+._*
+
+# Diretórios de cache e logs do PHP
+.php_cs.cache
+.phpunit.result.cache
+/coverage/
+
+# Diretórios de cache do Laravel
+bootstrap/cache/
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*
+storage/debugbar/*

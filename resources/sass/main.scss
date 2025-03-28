@@ -1,0 +1,20 @@
+// Variáveis globais
+@use 'variables';
+
+// Mixins reutilizáveis
+@use 'mixins';
+
+// Reset e estilos globais
+@use 'base';
+
+// Estilos específicos para páginas
+@use 'pages/home';
+@use 'pages/home-responsive';
+@use 'pages/login';
+@use 'pages/register';
+@use 'pages/password';
+@use 'pages/dashboard';
+@use 'pages/user-profile';
+@use 'pages/clientes';
+@use 'pages/clientes-novo';
+@use 'pages/clientes-perfil';

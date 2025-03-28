@@ -1,0 +1,278 @@
+@use "../variables";
+@use "../mixins";
+
+// Responsividade para todos os tamanhos de celulares
+@media (max-width: 1024px) {
+    // Ajusta a seção "Início"
+    .inicio {
+        flex-direction: column; // Altera o layout para coluna (de cima para baixo)
+        position: relative; // Garante que as seções respeitem a hierarquia de camadas
+
+        &__esquerda {
+            order: 1; // Mantém a seção da esquerda no topo
+            text-align: center; // Centraliza o texto
+            padding: variables.$spacing-medium;
+            z-index: 1; // Define a hierarquia: fica atrás do modal
+            position: relative; // Permite manipulação de camadas
+        }
+
+        &__direita {
+            order: 2; // Exibe a seção da direita abaixo
+            padding: variables.$spacing-medium;
+            position: relative; // Garante que o modal esteja em um contexto de posicionamento
+        
+            // Reset e ajustes do modal
+            .modal {
+                all: unset; // Reseta todas as propriedades herdadas ou globais
+                display: flex; // Define o modal como flex container
+                flex-direction: column; // Alinha os itens internos verticalmente
+                justify-content: flex-start; // Alinha os itens ao topo do modal
+                align-items: center; // Centraliza os itens horizontalmente
+                width: 90%; // Mantém a largura do modal em 90%
+                padding: calc(variables.$spacing-small * 0.8); // Ajusta o espaçamento interno
+                margin: 20px auto; // Centraliza horizontalmente
+                position: relative; // Define o modal no fluxo do layout
+                top: 0; // Remove qualquer deslocamento vertical
+                z-index: 2; // Garante que o modal fique acima da seção esquerda
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25); // Adiciona sombra para destaque
+                border-radius: calc(variables.$border-radius * 0.8); // Reduz o raio das bordas para 80%
+        
+                // Cor preta semi-transparente
+                background-color: rgba(0, 0, 0, 0.8); // Preto com 80% de opacidade
+                color: variables.$color-white; // Texto branco para contraste
+        
+                // Altura ajustada
+                height: auto; // Altura dinâmica baseada no conteúdo
+                max-height: 40vh; // Define a altura máxima para 40% da viewport
+                overflow-y: auto; // Permite rolagem vertical caso o conteúdo ultrapasse a altura máxima
+        
+                // Adiciona a animação de entrada (da direita para a esquerda)
+                opacity: 0; // Inicialmente invisível
+                transform: translateX(100%); // Começa fora da tela (à direita)
+                animation: slide-in-right 0.5s ease-out forwards; // Animação de deslizar para a esquerda
+        
+                // Ajustes internos para organização do conteúdo
+                &__header {
+                    font-size: 1.4rem; // Define um tamanho fixo para o cabeçalho
+                    text-align: center; // Centraliza o texto
+                    margin-bottom: calc(variables.$spacing-small * 0.8); // Espaçamento inferior do cabeçalho
+                }
+        
+                &__body {
+                    font-size: 1rem; // Define um tamanho fixo para o corpo do texto
+                    line-height: 1.5; // Ajusta o espaçamento entre linhas
+                    text-align: left; // Alinha o texto à esquerda
+                    width: 100%; // O corpo ocupa toda a largura do modal
+                    flex: 1; // Permite que o corpo ocupe o espaço restante do modal
+                    display: flex;
+                    flex-direction: column; // Elementos internos do corpo serão alinhados em coluna
+                    gap: calc(variables.$spacing-small * 0.8); // Espaçamento entre os elementos
+                    overflow: hidden; // Garante que o conteúdo interno respeite os limites do modal
+                }
+        
+                &__footer {
+                    width: 100%; // O rodapé ocupa toda a largura do modal
+                    display: flex; // Alinha os botões horizontalmente
+                    justify-content: center; // Centraliza os botões no rodapé
+                    gap: calc(variables.$spacing-small * 0.6); // Espaçamento horizontal entre os botões
+                    padding-top: calc(variables.$spacing-small * 0.8); // Espaçamento superior do rodapé
+                    button {
+                        font-size: 0.9rem; // Define um tamanho fixo para os botões
+                        padding: calc(variables.$spacing-small * 0.6); // Ajusta o padding interno dos botões
+                        border-radius: calc(variables.$border-radius * 0.8); // Mantém bordas arredondadas
+                    }
+                }
+            }
+        }
+    }
+
+    .galeria {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: variables.$spacing-large;
+        min-height: 100vh; // Ocupa a altura total da viewport
+        text-align: center;
+        position: relative;
+
+        // Background
+        @include mixins.background-image(variables.$image-background);
+        background-attachment: fixed;
+        background-position: center;
+        background-size: cover;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(
+                0,
+                0,
+                0,
+                0.5
+            ); // Fundo preto semitransparente
+            z-index: 1;
+        }
+
+        &__conteudo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 800px;
+            padding: variables.$spacing-large;
+            border-radius: variables.$border-radius;
+            gap: variables.$spacing-medium;
+            position: relative;
+            z-index: 2;
+
+            &.hidden {
+                opacity: 0;
+                transform: scale(0.9);
+                transition: opacity 0.5s ease, transform 0.5s ease;
+            }
+
+            &.visible {
+                animation: fade-in 0.5s ease forwards;
+            }
+        }
+
+        &__titulo {
+            font-size: 2.5rem;
+            color: variables.$color-white;
+
+            &:hover {
+                color: variables.$color-red;
+                transition: color 0.3s ease-in-out;
+            }
+        }
+
+        &__texto {
+            font-size: variables.$font-size-base;
+            color: variables.$color-white;
+            line-height: 1.5;
+
+            strong {
+                color: variables.$color-white;
+            }
+        }
+
+        &__grid {
+            display: grid;
+            grid-template-columns: 1fr; // Apenas 1 coluna
+            gap: variables.$spacing-medium; // Espaçamento entre as imagens
+            width: 100%; // O grid ocupa toda a largura do container
+            max-width: 500px; // Limita a largura máxima para dispositivos móveis
+            box-sizing: border-box;
+
+            & > div {
+                display: block;
+                width: 100%; // Cada imagem ocupa 100% da largura da coluna
+                aspect-ratio: 1 / 1; // Mantém as imagens quadradas
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                border-radius: variables.$border-radius;
+                box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+                transition: transform 0.3s ease;
+
+                &:hover {
+                    transform: scale(
+                        1.05
+                    ); // Aplica um leve zoom ao passar o mouse
+                }
+            }
+
+            // Estilo para cada imagem no grid
+            & > div:nth-child(1) {
+                background-image: url("/images/foto1.jpg");
+            }
+            & > div:nth-child(2) {
+                background-image: url("/images/foto2.jpg");
+            }
+            & > div:nth-child(3) {
+                background-image: url("/images/foto3.jpg");
+            }
+            & > div:nth-child(4) {
+                background-image: url("/images/foto4.jpg");
+            }
+            & > div:nth-child(5) {
+                background-image: url("/images/foto5.jpg");
+            }
+            & > div:nth-child(6) {
+                background-image: url("/images/foto6.jpg");
+            }
+            & > div:nth-child(7) {
+                background-image: url("/images/foto7.jpg");
+            }
+            & > div:nth-child(8) {
+                background-image: url("/images/foto8.jpg");
+            }
+            & > div:nth-child(9) {
+                background-image: url("/images/foto9.jpg");
+            }
+            & > div:nth-child(10) {
+                background-image: url('/images/foto10.jpg');
+            }
+            & > div:nth-child(11) {
+                background-image: url('/images/foto11.jpg');
+            }
+            & > div:nth-child(12) {
+                background-image: url('/images/foto12.jpg');
+            }
+        }
+
+        &__modal {
+            width: 90%; // O modal ocupa 90% da largura da página
+            max-width: 600px; // Define uma largura máxima para o modal
+            background-color: rgba(
+                255,
+                255,
+                255,
+                0.9
+            ); // Fundo branco semi-transparente
+            border-radius: variables.$border-radius; // Bordas arredondadas
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25); // Sombra leve
+            padding: variables.$spacing-medium; // Espaçamento interno
+            margin: 20px auto; // Centraliza o modal horizontalmente
+            position: relative; // Define o posicionamento padrão
+
+            height: auto; // Altura dinâmica para ajustar ao conteúdo
+            max-height: 400vh; // Define um limite máximo de altura para o modal (opcional)
+            overflow-y: auto; // Permite rolagem vertical caso o conteúdo ultrapasse a altura máxima
+
+            display: flex;
+            flex-direction: column; // Alinha os elementos verticalmente
+            align-items: center; // Centraliza os elementos horizontalmente
+            gap: variables.$spacing-medium; // Espaçamento entre os itens do modal
+        }
+    }
+
+    // Ajusta o rodapé
+    .footer {
+        &__content {
+            flex-direction: column; // Organiza o rodapé em coluna
+            align-items: center; // Centraliza os elementos
+            text-align: center; // Centraliza o texto
+        }
+
+        &__right {
+            order: 1; // Seção da direita no topo
+            margin-bottom: variables.$spacing-medium; // Espaçamento inferior
+        }
+
+        &__center {
+            order: 2; // Seção do meio no centro
+            margin-bottom: variables.$spacing-medium; // Espaçamento inferior
+        }
+
+        &__left {
+            order: 3; // Seção da esquerda no final
+            iframe {
+                height: 150px; // Ajusta a altura do mapa
+            }
+        }
+    }
+}

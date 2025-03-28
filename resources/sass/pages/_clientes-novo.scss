@@ -1,0 +1,183 @@
+@use 'dashboard'; // Importa os estilos da Dashboard
+@use '../mixins' as mixins;
+@use '../variables' as variables;
+
+// Remove a animação da imagem de fundo e aplica o efeito de blur
+.clientes-novo-layout .dashboard-content__image {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+    animation: none !important;
+    filter: blur(10px);
+}
+
+// Configuração geral da página (sem scroll e com imagem de fundo)
+.clientes-novo-layout {
+    height: 100vh; // A página ocupa 100% da altura da tela
+    overflow: hidden; // Remove o scroll
+    position: relative; // Garante que o conteúdo seja posicionado corretamente
+}
+
+// Botão de Salvar acima do modal
+.clientes-save-button-container {
+    display: flex; // Flexbox para alinhamento
+    justify-content: flex-end; // Alinha os botões à direita
+    position: absolute; // Posiciona os botões em relação à página
+    top: 100px; // Distância do topo da página
+    right: 135px; // Distância da borda direita da página
+    z-index: 10; // Garante que os botões fiquem acima de outros elementos
+    gap: 10px; // Espaçamento entre os botões
+}
+
+// Botão de Salvar
+.clientes-save-button {
+    background-color: variables.$color-red; // Fundo vermelho
+    color: variables.$color-white; // Texto branco
+    border: none; // Remove bordas padrão
+    border-radius: variables.$border-radius; // Bordas arredondadas
+    padding: 10px 20px; // Espaçamento interno
+    font-size: variables.$font-size-base; // Tamanho da fonte
+    font-weight: bold; // Negrito no texto
+    cursor: pointer; // Cursor de ponteiro ao passar o mouse
+    transition: all 0.3s ease; // Transição suave para hover e foco
+
+    &:hover {
+        background-color: variables.$color-gray; // Fundo cinza ao passar o mouse
+    }
+
+    &:focus {
+        outline: 2px solid variables.$color-red; // Contorno vermelho ao focar
+    }
+}
+
+// Botão de Cancelar
+.clientes-cancel-button {
+    background-color: variables.$color-gray; // Fundo cinza
+    color: variables.$color-white; // Texto branco
+    border: none; // Remove bordas padrão
+    border-radius: variables.$border-radius; // Bordas arredondadas
+    padding: 10px 20px; // Espaçamento interno
+    font-size: variables.$font-size-base; // Tamanho da fonte
+    font-weight: bold; // Negrito no texto
+    cursor: pointer; // Cursor de ponteiro ao passar o mouse
+    transition: all 0.3s ease; // Transição suave para hover e foco
+
+    &:hover {
+        background-color: variables.$color-red; // Fundo vermelho ao passar o mouse
+    }
+
+    &:focus {
+        outline: 2px solid variables.$color-gray; // Contorno cinza ao focar
+    }
+}
+
+// Modais
+.clientes-modais {
+    display: flex; // Flexbox para organizar os modais
+    flex-direction: column; // Exibe os modais em coluna
+    align-items: center; // Centraliza os modais horizontalmente
+    position: absolute; // Para posicionamento manual
+    top: 50%; // Centraliza verticalmente
+    left: 50%; // Centraliza horizontalmente
+    transform: translate(-50%, -50%); // Ajusta o centro exato
+    gap: 20px; // Espaçamento entre os dois modais
+
+    // Estilos gerais para os modais
+    .modal {
+        width: 80vw; // Largura do modal permanece 80% da largura da viewport
+        min-height: 100px; // Altura mínima
+        max-height: 450px; // Altura máxima para o modal superior
+        background-color: rgba(255, 255, 255, 0.9); // Fundo branco semi-transparente
+        border-radius: variables.$border-radius; // Bordas arredondadas
+        box-shadow: variables.$box-shadow; // Sombra para destaque
+        padding: 30px 20px; // Espaçamento interno (ajustado para mais espaçamento superior)
+        box-sizing: border-box; // Garante que o tamanho inclua bordas e padding
+        position: relative; // Posicionamento relativo para ajustes
+        text-align: center; // Centraliza o texto dentro do modal
+        font-size: variables.$font-size-base; // Tamanho da fonte
+        color: variables.$color-black; // Texto preto
+
+        .modal-title {
+            font-size: variables.$font-size-heading; // Tamanho do título
+            font-weight: bold; // Negrito
+            margin-bottom: 30px; // Espaçamento aumentado abaixo do título
+            color: variables.$color-black; // Cor do texto
+        }
+
+        .modal-content {
+            display: flex;
+            flex-direction: column; // Organiza os campos em coluna (Email abaixo de Nome e Telefone)
+            gap: variables.$spacing-medium; // Espaçamento entre os itens internos
+            width: 100%; // O conteúdo ocupa toda a largura do modal
+            margin-top: 40px; // Espaçamento maior para afastar o conteúdo do título
+
+            .modal-fields {
+                display: flex; // Flexbox para organizar Nome e Telefone lado a lado
+                flex-direction: row;
+                justify-content: space-between; // Nome à esquerda e Telefone à direita
+                gap: variables.$spacing-medium; // Espaçamento entre Nome e Telefone
+
+                // Aumentando a largura dos campos
+                .modal-section {
+                    flex: 1; // Faz com que cada campo ocupe proporcionalmente o máximo de espaço disponível
+                }
+
+                // Caso queira uma proporção diferente (por exemplo, Nome maior que Telefone)
+                .modal-section:first-child { // Primeiro campo (Nome)
+                    flex: 2; // Nome ocupa o dobro do espaço do Telefone
+                }
+
+                .modal-section:last-child { // Segundo campo (Telefone)
+                    flex: 1; // Telefone ocupa um espaço menor
+                }
+            }
+
+            .modal-section {
+                display: flex;
+                flex-direction: column; // Organiza os itens verticalmente
+                gap: variables.$spacing-small; // Espaçamento entre os itens internos
+
+                label {
+                    font-size: variables.$font-size-base; // Tamanho do texto do rótulo
+                    color: variables.$color-black; // Cor do texto
+                    text-align: left; // Alinha o texto à esquerda
+                }
+
+                input {
+                    width: 100%; // O campo ocupa toda a largura da seção
+                    padding: variables.$spacing-small; // Espaçamento interno
+                    border: 1px solid variables.$color-gray; // Borda cinza
+                    border-radius: variables.$border-radius; // Bordas arredondadas
+                    font-size: variables.$font-size-base; // Tamanho da fonte
+
+                    &:focus {
+                        outline: 2px solid variables.$color-red; // Contorno vermelho ao focar
+                    }
+                }
+            }
+
+            textarea.comentarios-field {
+                width: 100%; // O campo ocupa toda a largura do modal
+                height: calc(100% - 80px); // Altura proporcional, ajustada para o título
+                padding: variables.$spacing-medium; // Espaçamento interno
+                border: 1px solid variables.$color-gray; // Borda cinza
+                border-radius: variables.$border-radius; // Bordas arredondadas
+                font-size: variables.$font-size-base; // Tamanho da fonte
+                resize: none; // Remove a possibilidade de redimensionar o campo
+                margin-top: variables.$spacing-medium; // Adiciona espaçamento abaixo do título
+
+                &:focus {
+                    outline: 2px solid variables.$color-red; // Contorno vermelho ao focar
+                }
+            }
+        }
+    }
+
+    // Ajuste dos modais superior e inferior
+    .modal-top {
+        transform: translateY(20%); // Move o modal superior mais para baixo
+    }
+
+    .modal-bottom {
+        transform: translateY(25%); // Move o modal inferior mais para cima
+    }
+}

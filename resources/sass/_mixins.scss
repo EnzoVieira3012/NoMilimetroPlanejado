@@ -1,0 +1,99 @@
+@use "sass:list"; // Importa o módulo de listas do Sass
+@use "variables"; // Importa variáveis globais
+@use "sass:math";
+
+// Função para calcular rem baseado no tamanho de fonte base (16px por padrão)
+@function rem($size, $base: 16px) {
+    @return math.div($size, $base) * 1rem; // Usa math.div() para divisão
+}
+
+// Centralizar elementos (flexbox)
+@mixin center-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+// Botões estilizados
+@mixin button($bg-color, $text-color) {
+    background-color: $bg-color;
+    color: $text-color;
+    padding: 10px 20px;
+    border: none;
+    border-radius: variables.$border-radius;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+// Aplicar background com imagem
+@mixin background-image(
+    $image-path,
+    $size: cover,
+    $position: center,
+    $attachment: fixed
+) {
+    background-image: url($image-path);
+    background-size: $size;
+    background-position: $position;
+    background-attachment: $attachment; // Adiciona a opção de fixar o fundo
+    background-repeat: no-repeat;
+}
+
+// Mixin para estilizar modais
+@mixin modal(
+    $width: 400px,
+    $height: 200px,
+    $bg-color: variables.$color-black,
+    $border-radius: variables.$border-radius
+) {
+    width: $width;
+    height: $height;
+    background-color: $bg-color;
+    border-radius: $border-radius;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25); // Sombra para destacar
+    padding: variables.$spacing-medium;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: variables.$color-white; // Texto branco por padrão
+    position: relative; // Animação de entrada
+}
+
+// Imagem quadrada com bordas arredondadas
+@mixin square-image($size) {
+    width: $size; // Define a largura
+    height: $size; // Define a altura
+    object-fit: cover; // Corta a imagem para ajustar ao quadrado
+    border-radius: variables.$border-radius; // Adiciona bordas arredondadas
+    box-shadow: variables.$box-shadow; // Sombra opcional
+    transition: transform 0.3s ease; // Transição suave para efeitos hover
+
+    &:hover {
+        transform: scale(1.05); // Zoom suave ao passar o mouse
+    }
+}
+
+// Estilização de galeria de imagens
+@mixin gallery-images($images) {
+    @for $i from 1 through list.length($images) {
+        &:nth-child(#{$i}) {
+            background-image: url(list.nth($images, $i)); // Seleciona cada imagem
+            background-size: cover; // Faz a imagem preencher o espaço
+            background-position: center; // Centraliza o conteúdo visível da imagem
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+            border-radius: variables.$border-radius;
+            box-shadow: variables.$box-shadow;
+            transition: transform 0.3s ease;
+
+            &:hover {
+                transform: scale(1.05); // Zoom suave no hover
+            }
+        }
+    }
+}

@@ -1,0 +1,60 @@
+// Cores principais
+$color-black: #000000; // Preto
+$color-white: #ffffff; // Branco
+$color-gray: #333333; // Cinza escuro
+$background-color: $color-white; // Fundo padrão
+$color-red: #8b0000; // Vermelho sangue (Dark Red)
+
+// Fontes
+$font-family-base: 'Arial', sans-serif; // Fonte padrão
+$font-size-base: 16px; // Tamanho base
+$font-size-heading: 24px; // Tamanho dos cabeçalhos
+
+// Espaçamentos
+$spacing-small: 8px;
+$spacing-medium: 16px;
+$spacing-large: 24px;
+$spacing-xlarge: 32px;
+$modal-spacing: 20px;
+
+// Caminho para imagens
+$image-background: '/images/Background.png';
+
+// Borda e sombras
+$border-radius: 12px; // Bordas arredondadas para o modal
+$box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+// Lista de imagens da galeria
+$gallery-images: (
+    '/images/foto1.jpg',
+    '/images/foto2.jpg',
+    '/images/foto3.jpg',
+    '/images/foto4.jpg',
+    '/images/foto5.jpg',
+    '/images/foto6.jpg',
+    '/images/foto7.jpg',
+    '/images/foto8.jpg',
+    '/images/foto9.jpg'
+    '/images/foto10.jpg'
+    '/images/foto11.jpg'
+    '/images/foto12.jpg'
+);
+
+$image-higor-leal: '/images/higor_leal.jpg'; // Caminho da imagem
+
+$image-login: '/images/Background_auth.jpg'; // Caminho da imagem de autenticação
+
+$image-dashboard: '/images/Background_dashboard.png'; // Caminho da imagem da Dashboard
+
+// Imagens do header vertical
+$image-menu: '/images/menu.png';
+$image-logo: '/images/logo.png';
+$image-divisor: '/images/divisor.png';
+$image-user: '/images/user.png';
+$image-clientes: '/images/clientes.png';
+$image-sair: '/images/sair.png';
+
+// Imagens do ExtendedHeader
+$image-voltar: '/images/voltar.png';
+$image-logo-extended: '/images/logo_extended.png';
+$image-divisor-extended: '/images/divisor_extended.png';

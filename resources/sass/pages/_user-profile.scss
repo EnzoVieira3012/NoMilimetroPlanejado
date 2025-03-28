@@ -1,0 +1,237 @@
+// Importa os estilos da Dashboard
+@use 'dashboard';
+@use '../mixins' as mixins;
+@use '../variables' as variables;
+
+// Remove a animação da imagem de fundo e aplica o efeito de blur apenas na página de perfil
+.user-profile-layout .dashboard-content__image {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+    animation: none !important;
+    filter: blur(10px);
+}
+
+// Estilização do título "Perfil de Usuário" no canto superior direito
+.user-profile-title {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    color: variables.$color-black;
+    font-family: variables.$font-family-base;
+}
+
+// Reset seletivo para evitar conflitos sem remover variáveis importantes
+.user-profile-modal .modal-content, 
+.user-profile-modal .modal-section, 
+.user-profile-modal .editable-field {
+    margin: 0; // Remove margens padrão
+    padding: 0; // Remove padding padrão
+    box-sizing: border-box; // Garante que o tamanho inclua bordas e padding
+    border: none; // Remove bordas padrão
+    background: none; // Remove fundos padrão
+    text-decoration: none; // Remove decorações de texto padrão
+    list-style: none; // Remove estilos de listas, se aplicável
+    outline: none; // Remove contorno padrão
+}
+
+// Título do modal
+.modal-title {
+    position: absolute;
+    top: variables.$spacing-medium;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: variables.$font-size-heading;
+    font-weight: bold;
+    color: variables.$color-black;
+    margin-bottom: variables.$spacing-medium;
+}
+
+// Modal principal
+.user-profile-modal {
+    @include mixins.modal(
+        80vw, // Largura do modal permanece 80% da largura da viewport
+        auto, // Altura do modal será automática, baseada no conteúdo
+        rgba(255, 255, 255, 0.9), // Fundo branco semi-transparente
+        variables.$border-radius
+    );
+
+    position: absolute;
+    top: calc(35% + 15px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .modal-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: variables.$spacing-medium;
+        gap: variables.$spacing-medium;
+        margin-top: calc(variables.$font-size-heading + variables.$spacing-medium);
+        width: 100%; // Garante que o contêiner ocupe toda a largura do modal
+
+        .modal-section {
+            display: flex;
+            flex-direction: column; // Organiza os itens verticalmente
+            justify-content: center; // Centraliza os itens no eixo vertical
+            align-items: center; // Centraliza os itens no eixo horizontal
+            gap: variables.$spacing-medium; // Espaçamento entre os itens
+            flex-grow: 1; // Permite que as seções cresçam proporcionalmente
+            flex-basis: 0; // Garante que o tamanho inicial seja calculado pelo `flex-grow`
+            height: 100%; // Garante que a seção ocupe toda a altura do modal
+            text-align: center; // Centraliza o texto dentro da seção, se aplicável
+
+            &-left {
+                align-items: flex-start; // Alinha os componentes à esquerda da seção
+                margin-left: -20px; // Move os componentes mais para a esquerda do modal
+
+                .profile-image-container {
+                    @include mixins.square-image(150px); // Mantém o formato quadrado de 150px
+                    background-color: transparent; // Deixa o fundo transparente
+                    border: none; // Remove quaisquer bordas
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 16px;
+                    color: variables.$color-white; // Mantém o texto branco (caso necessário)
+                }
+
+                .upload-button {
+                    width: 150px !important;
+                    @include mixins.button(variables.$color-gray, variables.$color-white);
+                }
+            }
+
+            &-middle {
+                flex: 3; // A seção do meio ocupa três vezes o espaço das laterais
+                align-items: center; // Centraliza os componentes horizontalmente dentro da seção
+                text-align: center; // Centraliza o texto dentro da seção
+            
+                p {
+                    font-size: variables.$font-size-base; // Tamanho padrão do texto
+                    margin-bottom: variables.$spacing-small; // Espaçamento entre o texto e os campos
+                    color: variables.$color-black !important; // Define a cor do texto como preto com prioridade
+                }
+            
+                .editable-field {
+                    width: 100% !important; // Garante que os campos ocupem toda a largura disponível
+                    max-width: 1200px !important; // Define o limite máximo da largura dos campos
+                    padding: variables.$spacing-small;
+                    border: 1px solid variables.$color-gray;
+                    border-radius: variables.$border-radius;
+                    font-size: variables.$font-size-base;
+            
+                    &:focus {
+                        outline: 2px solid variables.$color-red;
+                    }
+                }
+            }
+
+            &-right {
+                align-items: flex-end; // Alinha os componentes à direita da seção
+                margin-right: -20px;
+
+                .modal-button,
+                .modal-save-button {
+                    width: 150px !important;
+                    @include mixins.button(variables.$color-gray, variables.$color-white);
+                }
+
+                .modal-save-button {
+                    background-color: variables.$color-red;
+                }
+            }
+        }
+    }
+}
+
+.user-profile-modal-secondary {
+    @include mixins.modal(
+        80vw, // Mantemos a largura de 80% do viewport
+        auto, // Altura automática baseada no conteúdo
+        rgba(255, 255, 255, 0.9), // Fundo branco semi-transparente
+        variables.$border-radius // Bordas arredondadas
+    );
+
+    position: absolute; // Mantém o posicionamento do modal
+    top: -200px; // Começa fora da tela para a animação
+    left: 50%; // Centraliza horizontalmente
+    transform: translate(-50%, 0); // Ajusta horizontalmente
+    opacity: 0; // Inicialmente invisível
+    transition: all 0.5s ease-in-out; // Animação suave para o modal
+
+    &.visible {
+        top: calc(35% + 200px); // Move para a posição final
+        opacity: 1; // Torna visível
+    }
+
+    .modal-content-secondary {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: variables.$spacing-medium;
+        gap: variables.$spacing-medium;
+
+        .modal-section {
+            display: flex;
+            flex-direction: column; // Organiza os itens verticalmente
+            justify-content: center;
+            align-items: center;
+            gap: variables.$spacing-medium;
+            flex-grow: 1; // Permite que as seções cresçam proporcionalmente
+            flex-basis: 0; // Garante que o tamanho inicial seja calculado pelo `flex-grow`
+
+            &-left {
+                align-items: flex-start;
+
+                .editable-field {
+                    width: 100%;
+                    max-width: 400px; // Limita a largura máxima
+                    padding: variables.$spacing-small;
+                    border: 1px solid variables.$color-gray;
+                    border-radius: variables.$border-radius;
+                    font-size: variables.$font-size-base;
+
+                    &:focus {
+                        outline: 2px solid variables.$color-red;
+                    }
+                }
+            }
+
+            &-middle {
+                flex: 3; // A seção do meio ocupa mais espaço
+                align-items: center;
+
+                .editable-field {
+                    width: 100%;
+                    max-width: 400px;
+                    padding: variables.$spacing-small;
+                    border: 1px solid variables.$color-gray;
+                    border-radius: variables.$border-radius;
+                    font-size: variables.$font-size-base;
+
+                    &:focus {
+                        outline: 2px solid variables.$color-red;
+                    }
+                }
+            }
+
+            &-right {
+                align-items: flex-end;
+
+                .modal-button {
+                    @include mixins.button(variables.$color-gray, variables.$color-white);
+                    width: 150px;
+                }
+
+                .modal-save-button {
+                    background-color: variables.$color-red;
+                }
+            }
+        }
+    }
+}

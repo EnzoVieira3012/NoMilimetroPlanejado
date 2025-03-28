@@ -1,0 +1,192 @@
+@use 'dashboard'; // Importa os estilos da Dashboard
+@use '../mixins' as mixins;
+@use '../variables' as variables;
+
+// Remove a animação da imagem de fundo e aplica o efeito de blur
+.clientes-layout .dashboard-content__image {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+    animation: none !important;
+    filter: blur(10px);
+}
+
+// Reset seletivo para evitar conflitos sem remover variáveis importantes
+.clientes-content .clientes-filter,
+.clientes-content .clientes-table-container,
+.clientes-content .clientes-pagination,
+.clientes-content .clientes-table {
+    margin: 0; // Remove margens padrão
+    padding: 0; // Remove padding padrão
+    box-sizing: border-box; // Garante que o tamanho inclua bordas e padding
+    border: none; // Remove bordas padrão
+    background: none; // Remove fundos padrão
+    text-decoration: none; // Remove decorações de texto padrão
+    list-style: none; // Remove estilos de listas, se aplicável
+    outline: none; // Remove contorno padrão
+}
+
+// Configuração geral da página (sem scroll e com imagem de fundo)
+.clientes-layout {
+    height: 100vh; // A página ocupa 100% da altura da tela
+    overflow: hidden; // Remove o scroll
+    position: relative; // Garante que o conteúdo seja posicionado corretamente
+}
+
+// Estilização do título no canto superior direito
+.clientes-title {
+    position: absolute; // Para posicionamento manual
+    top: 20px; // Distância do topo
+    right: 20px; // Distância da direita
+    font-size: 30px; // Tamanho do texto
+    font-weight: bold; // Texto em negrito
+    color: variables.$color-black; // Cor do texto
+    font-family: variables.$font-family-base; // Fonte base
+}
+
+// Conteúdo principal da página (tabela e filtro)
+.clientes-content {
+    position: absolute; // Para posicionamento manual
+    top: 100px; // Subimos 10px (anteriormente era 130px)
+    left: 50%; // Centraliza horizontalmente
+    transform: translateX(-50%); // Ajusta para que o conteúdo fique centralizado horizontalmente
+    display: flex; // Flexbox para organizar filtro e tabela
+    flex-direction: column; // Organiza filtro e tabela em coluna
+    align-items: center; // Centraliza os itens horizontalmente
+    gap: 20px; // Espaçamento entre o filtro e a tabela
+    width: 90%; // Ajusta a largura do conteúdo principal
+}
+
+// Estilização do filtro
+.clientes-filter {
+    width: 100%; // O filtro e os botões ocupam toda a largura do conteúdo principal
+    display: flex; // Flexbox para organizar o alinhamento
+    justify-content: space-between; // Espaça o filtro à esquerda e os botões à direita
+    align-items: center; // Alinha verticalmente o filtro e os botões
+    margin-bottom: 10px; // Espaçamento entre o filtro/botões e a tabela
+
+    input {
+        width: 850px; // Largura fixa do filtro
+        padding: 10px; // Espaçamento interno
+        border: 1px solid variables.$color-gray; // Borda cinza escura
+        border-radius: variables.$border-radius; // Bordas arredondadas
+        font-size: variables.$font-size-base; // Tamanho da fonte
+        color: variables.$color-black; // Cor do texto
+        background-color: rgba(255, 255, 255, 0.8); // Fundo branco semi-transparente
+
+        &:focus {
+            outline: 2px solid variables.$color-red; // Contorno vermelho ao focar
+        }
+    }
+
+    .clientes-buttons {
+        display: flex; // Flexbox para alinhar os botões
+        gap: 10px; // Espaçamento entre os botões
+
+        .pdf-button,
+        .new-client-button {
+            width: 160px; // Mesma largura para ambos os botões
+            padding: 10px 20px; // Espaçamento interno
+            font-size: variables.$font-size-base; // Tamanho da fonte
+            font-weight: bold; // Texto em negrito
+            color: variables.$color-white; // Texto branco
+            border: none; // Remove as bordas padrão
+            border-radius: variables.$border-radius; // Bordas arredondadas
+            cursor: pointer; // Cursor de ponteiro ao passar o mouse
+            transition: background-color 0.3s ease; // Transição suave para o hover
+        }
+
+        .pdf-button {
+            background-color: variables.$color-gray; // Fundo cinza (padrão de cor)
+
+            &:hover {
+                background-color: variables.$color-red; // Muda o fundo para vermelho ao passar o mouse
+            }
+
+            &:focus {
+                outline: 2px solid variables.$color-red; // Contorno vermelho ao focar
+            }
+        }
+
+        .new-client-button {
+            background-color: variables.$color-red; // Fundo vermelho (padrão de cor)
+
+            &:hover {
+                background-color: variables.$color-gray; // Muda o fundo para cinza ao passar o mouse
+            }
+
+            &:focus {
+                outline: 2px solid variables.$color-gray; // Contorno cinza ao focar
+            }
+        }
+    }
+}
+
+// Estilização da tabela de clientes
+.clientes-table-container {
+    width: 100%; // A tabela ocupa toda a largura do conteúdo principal
+}
+
+.clientes-table {
+    width: 100%; // A tabela ocupa toda a largura disponível do contêiner
+    border-collapse: collapse; // Remove os espaços entre bordas
+    background-color: rgba(255, 255, 255, 0.8); // Fundo branco semi-transparente
+    box-shadow: variables.$box-shadow; // Sombra para destaque
+    border-radius: variables.$border-radius; // Bordas arredondadas
+    overflow: hidden; // Impede que o conteúdo ultrapasse os cantos arredondados
+
+    th, td {
+        padding: 15px; // Espaçamento interno nas células
+        text-align: left; // Alinha o texto à esquerda
+        border: 1px solid variables.$color-gray; // Borda cinza escura
+        font-size: variables.$font-size-base; // Tamanho da fonte
+    }
+
+    th {
+        background-color: variables.$color-gray; // Fundo cinza escuro
+        color: variables.$color-white; // Texto branco
+        font-weight: bold; // Negrito
+    }
+
+    td {
+        color: variables.$color-black; // Texto preto
+    }
+
+    .no-clients {
+        text-align: center; // Centraliza o texto
+        font-style: italic; // Texto em itálico
+        color: variables.$color-gray; // Texto cinza escuro
+    }
+}
+
+// Estilização da paginação
+.clientes-pagination {
+    display: flex; // Flexbox para organizar os botões
+    justify-content: center; // Centraliza horizontalmente
+    align-items: center; // Alinha verticalmente
+    margin-top: 10px; // Espaçamento acima da paginação
+
+    button {
+        padding: 10px 15px; // Espaçamento interno
+        margin: 0 10px; // Espaçamento entre os botões
+        border: none; // Remove bordas
+        border-radius: variables.$border-radius; // Bordas arredondadas
+        background-color: variables.$color-gray; // Fundo cinza escuro
+        color: variables.$color-white; // Texto branco
+        font-size: variables.$font-size-base; // Tamanho da fonte
+        cursor: pointer; // Cursor de ponteiro ao passar o mouse
+
+        &:disabled {
+            background-color: rgba(51, 51, 51, 0.5); // Fundo cinza claro para botões desabilitados
+            cursor: not-allowed; // Cursor de "não permitido"
+        }
+
+        &:hover:not(:disabled) {
+            background-color: variables.$color-red; // Fundo vermelho ao passar o mouse
+        }
+    }
+
+    #pageNumber {
+        font-size: variables.$font-size-base; // Tamanho da fonte
+        color: variables.$color-black; // Texto preto
+    }
+}

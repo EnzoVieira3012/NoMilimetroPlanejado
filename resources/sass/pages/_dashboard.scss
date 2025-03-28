@@ -1,0 +1,350 @@
+@use "../variables";
+@use "../mixins";
+
+.dashboard-layout {
+    // Configuração principal do layout do Dashboard
+    .dashboard-content {
+        display: flex; // Flexbox para centralizar o conteúdo
+        justify-content: center; // Centraliza horizontalmente
+        align-items: center; // Centraliza verticalmente
+        height: 100vh; // Altura total da viewport
+        background-color: variables.$color-white; // Fundo branco
+        overflow: hidden; // Remove rolagem extra
+        font-size: mixins.rem(18px);
+
+        // Imagem de Fundo Centralizada
+        &__image {
+            width: 300px; // Largura fixa da imagem
+            height: 300px; // Altura fixa da imagem
+            background-image: url(variables.$image-dashboard); // Usa a variável da imagem
+            background-size: cover; // Faz a imagem preencher o container
+            background-position: center; // Centraliza a imagem
+            background-repeat: no-repeat; // Evita repetição
+
+            // Animação de fade-in
+            opacity: 0; // Inicialmente invisível
+            transform: scale(0.9); // Levemente menor
+            animation: fade-in-dashboard 1s ease-in-out forwards; // Aplica a animação
+        }
+
+        // Animação "fade-in"
+        @keyframes fade-in-dashboard {
+            0% {
+                opacity: 0; // Invisível
+                transform: scale(0.9); // Escala reduzida
+            }
+            100% {
+                opacity: 1; // Visível
+                transform: scale(1); // Escala normal
+            }
+        }
+
+        // Seção de títulos ou labels
+        &__header {
+            font-size: mixins.rem(18px); // Tamanho do texto
+            font-weight: bold; // Texto em negrito
+            color: variables.$color-red; // Usa o vermelho já definido
+            margin-bottom: 16px; // Espaçamento inferior
+            text-align: center; // Centralização do texto
+        }
+
+        // Seção de botões
+        &__buttons {
+            display: flex; // Flexbox para organizar os botões
+            flex-direction: row; // Botões dispostos lado a lado
+            gap: 16px; // Espaçamento entre os botões
+            margin-top: 24px; // Espaçamento superior
+
+            .dashboard-button {
+                padding: 12px 24px; // Espaçamento interno
+                background-color: variables.$color-gray; // Usa o cinza para o botão
+                color: variables.$color-white; // Texto branco
+                border: none; // Remove as bordas
+                border-radius: 4px; // Bordas arredondadas
+                font-size: mixins.rem(14px); // Tamanho do texto
+                cursor: pointer; // Cursor de ponteiro ao passar o mouse
+                transition: background-color 0.3s ease; // Transição suave
+
+                &:hover {
+                    background-color: variables.$color-red; // Usa o vermelho ao passar o mouse
+                }
+            }
+        }
+    }
+
+    // Container do Header
+    .dashboard-header-container {
+        position: relative; // Garante sobreposição correta entre headers
+    }
+
+    // Header Vertical (com animação de deslizar e ícones)
+    .dashboard-header-vertical {
+        width: 50px; // Largura do header
+        height: 100vh; // Altura total da página
+        background-color: variables.$color-black; // Fundo preto
+        position: fixed; // Fixa o header na lateral esquerda
+        top: 0; // Alinhado ao topo
+        left: -50px; // Começa fora da tela
+        z-index: 1000; // Sobrepõe o conteúdo principal
+        display: flex;
+        flex-direction: column; // Organiza os itens em coluna
+        justify-content: space-between; // Espaça o topo e a base
+        align-items: center; // Centraliza horizontalmente
+        transition: left 0.5s ease-in-out; // Animação de deslizar
+
+        &.visible {
+            left: 0; // Desliza para dentro da tela
+        }
+
+        // Ícones no Topo
+        &__top {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 8px;
+
+            .dashboard-header-icon {
+                width: 30px; // Tamanho fixo do ícone
+                height: 30px;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+                margin-bottom: 8px;
+                transition: transform 0.3s ease; // Suaviza a transformação ao passar o mouse
+
+                &:hover {
+                    transform: scale(
+                        1.2
+                    ); // Aumenta o tamanho do ícone em 20% ao passar o mouse
+                }
+
+                // Estilo de cada ícone
+                &.dashboard-header-menu {
+                    background-image: url(variables.$image-menu);
+                }
+                &.dashboard-header-logo {
+                    background-image: url(variables.$image-logo);
+
+                    // Remove a animação de hover para a logo
+                    &:hover {
+                        transform: none; // Nenhuma transformação ao passar o mouse
+                    }
+                }
+                &.dashboard-header-divisor {
+                    background-image: url(variables.$image-divisor);
+
+                    // Remove a animação de hover para a logo
+                    &:hover {
+                        transform: none; // Nenhuma transformação ao passar o mouse
+                    }
+                }
+                &.dashboard-header-user {
+                    background-image: url(variables.$image-user);
+                }
+                &.dashboard-header-clientes {
+                    background-image: url(variables.$image-clientes);
+                }
+            }
+        }
+
+        // Ícones na Base
+        &__bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 8px;
+
+            .dashboard-header-icon {
+                width: 30px; // Tamanho fixo do ícone
+                height: 30px;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+                margin-top: 8px;
+                transition: transform 0.3s ease; // Suaviza a transformação ao passar o mouse
+
+                &:hover {
+                    transform: scale(
+                        1.2
+                    ); // Aumenta o tamanho do ícone em 20% ao passar o mouse
+                }
+
+                // Estilo de cada ícone
+                &.dashboard-header-divisor-bottom {
+                    background-image: url(variables.$image-divisor);
+
+                    // Remove a animação de hover para a logo
+                    &:hover {
+                        transform: none; // Nenhuma transformação ao passar o mouse
+                    }
+                }
+                &.dashboard-header-sair {
+                    background-image: url(variables.$image-sair);
+                }
+            }
+        }
+    }
+
+    // Extended Header (com animação de deslizar e ícones)
+    .dashboard-header-extended {
+        // Estilos gerais
+        width: 250px; // Largura total do header
+        height: 100vh; // Altura total
+        background-color: variables.$color-black; // Fundo preto
+        position: fixed; // Fixa o header na lateral esquerda
+        top: 0; // Alinhado ao topo
+        left: -250px; // Começa fora da tela
+        z-index: 1001; // Sobrepõe o header vertical
+        display: flex;
+        flex-direction: column; // Organiza os itens em coluna
+        justify-content: space-between; // Espaça o topo e a base
+        align-items: center; // Centraliza horizontalmente
+        transition: left 0.5s ease-in-out; // Animação de deslizar
+
+        &.visible {
+            left: 0; // Desliza para dentro da tela
+        }
+
+        &__top {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; // Alinha os itens ao início (esquerda)
+            margin-top: 8px;
+
+            // Wrapper para ícone + texto
+            .dashboard-header-extended-item {
+                display: flex; // Ícone e texto lado a lado
+                align-items: center; // Centraliza verticalmente
+                margin-bottom: 16px; // Espaçamento entre os itens
+                transition: transform 0.3s ease; // Suaviza a transformação ao passar o mouse
+
+                &:hover {
+                    transform: scale(
+                        1.1
+                    ); // Aumenta o tamanho ao passar o mouse
+                }
+            }
+
+            // Ícones
+            .dashboard-header-extended-icon {
+                width: 30px; // Tamanho padrão dos ícones
+                height: 30px;
+                background-size: contain; // Ajusta a imagem dentro do container
+                background-repeat: no-repeat; // Evita repetição
+                background-position: center; // Centraliza a imagem no container
+                margin-right: 8px; // Espaçamento entre o ícone e o texto
+                transition: transform 0.3s ease; // Suaviza a transformação ao passar o mouse
+
+                // Ícone do botão Voltar
+                &.dashboard-header-voltar {
+                    background-image: url(variables.$image-voltar);
+                    position: relative;
+                    left: 25px; // Move 25 pixels para a direita
+
+                    &:hover {
+                        transform: scale(
+                            1.2
+                        ); // Aumenta o botão Voltar em 20% ao passar o mouse
+                    }
+                }
+
+                // Ícone da logo (Logo Extended)
+                &.dashboard-header-logo-extended {
+                    width: 250px; // Largura total do header
+                    height: 60px; // Altura proporcional
+                    background-size: contain; // Ajusta para caber no container
+                    background-image: url(variables.$image-logo-extended);
+                    position: relative;
+                    left: 20px; // Posicionamento perfeito
+                }
+
+                // Ícone do divisor (Divisor Extended)
+                &.dashboard-header-divisor-extended {
+                    width: 250px; // Largura total do header
+                    height: 5px; // Altura ajustada para divisores finos
+                    background-size: cover; // Preenche o container
+                    background-image: url(variables.$image-divisor-extended);
+                    margin-bottom: 5px; // Adiciona 5 pixels de espaçamento abaixo
+                }
+
+                // Ícones padrão (Usuário, Clientes, etc.)
+                &.dashboard-header-user {
+                    background-image: url(variables.$image-user);
+                    position: relative;
+                    left: 25px; // Move 25 pixels para a direita
+                }
+
+                &.dashboard-header-clientes {
+                    background-image: url(variables.$image-clientes);
+                    position: relative;
+                    left: 25px; // Move 25 pixels para a direita
+                }
+            }
+
+            // Estilo para os textos
+            .dashboard-header-extended-text {
+                font-size: 14px; // Tamanho do texto
+                color: variables.$color-white; // Texto branco
+                font-weight: 500; // Peso intermediário
+                white-space: nowrap; // Impede quebra de linha
+                margin-left: 25px; // Move o texto 25 pixels para a direita
+            }
+        }
+
+        &__bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; // Alinha os itens ao início (esquerda)
+            margin-bottom: 8px;
+
+            // Wrapper para ícone + texto
+            .dashboard-header-extended-item {
+                display: flex; // Ícone e texto lado a lado
+                align-items: center; // Centraliza verticalmente
+                margin-top: 16px; // Espaçamento entre os itens
+                transition: transform 0.3s ease; // Suaviza a transformação ao passar o mouse
+
+                &:hover {
+                    transform: scale(
+                        1.1
+                    ) !important; // Aumenta o tamanho de todo o wrapper ao passar o mouse
+                }
+            }
+
+            // Ícones
+            .dashboard-header-extended-icon {
+                width: 30px; // Tamanho padrão dos ícones
+                height: 30px;
+                background-size: contain;
+                background-repeat: no-repeat; // Evita repetição
+                background-position: center; // Centraliza a imagem no container
+                margin-right: 8px; // Espaçamento entre o ícone e o texto
+
+                // Ícone de sair
+                &.dashboard-header-sair {
+                    background-image: url(variables.$image-sair);
+                    position: relative;
+                    left: 25px; // Move 25 pixels para a direita
+                }
+            }
+
+            // Estilo para os textos
+            .dashboard-header-extended-text {
+                font-size: 14px; // Tamanho do texto
+                color: variables.$color-white; // Texto branco
+                font-weight: 500; // Peso intermediário
+                white-space: nowrap; // Impede quebra de linha
+                margin-left: 25px; // Move o texto 25 pixels para a direita
+            }
+
+            // Ícone do divisor na base
+            .dashboard-header-divisor-extended-bottom {
+                width: 250px; // Largura total do header
+                height: 5px; // Altura ajustada para divisores finos
+                background-size: cover; // Preenche o container
+                background-image: url(variables.$image-divisor-extended);
+                margin-bottom: 5px;
+            }
+        }
+    }
+}

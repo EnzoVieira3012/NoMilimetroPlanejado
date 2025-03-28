@@ -1,0 +1,21 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build:sass": "sass resources/sass/main.scss resources/css/style.css --no-source-map --style=compressed",
+        "watch:sass": "sass --watch resources/sass/main.scss:resources/css/style.css",
+        "copy:css": "copyfiles -f resources/css/* public/css",
+        "copy:js": "copyfiles -f resources/js/* public/js",
+        "copy:images": "copyfiles -f resources/images/* public/images",
+        "build": "npm run build:sass && npm run copy:css && npm run copy:js && npm run copy:images"
+    },
+    "devDependencies": {
+        "axios": "^1.7.4",
+        "concurrently": "^9.0.1",
+        "copyfiles": "^2.4.1",
+        "laravel-vite-plugin": "^1.2.0",
+        "sass": "^1.84.0",
+        "sass-loader": "^16.0.4"
+    }
+}

@@ -1,0 +1,566 @@
+@use '../variables';
+@use '../mixins';
+
+.header {
+    position: fixed; // Fixa o cabeçalho no topo da página
+    top: 0;
+    left: 0;
+    width: 100%; // Ocupa toda a largura da página
+    height: 60px; // Altura do cabeçalho
+    background-color: variables.$color-black; // Fundo preto
+    display: flex; // Organiza os elementos horizontalmente
+    justify-content: space-between; // Espaçamento entre os lados esquerdo e direito
+    align-items: center; // Alinha verticalmente os itens
+    padding: 0 variables.$spacing-large; // Espaçamento interno
+    z-index: 1000; // Garante que o cabeçalho fique acima de outros elementos
+    transform: translateY(-100%); // Inicialmente oculto fora da tela
+    transition: transform 0.3s ease; // Transição suave para o movimento
+}
+
+.header--visible {
+    transform: translateY(0); // Exibe o cabeçalho
+}
+
+.header__left,
+.header__right {
+    display: flex; // Organiza os links horizontalmente
+    align-items: center; // Alinha verticalmente os itens
+}
+
+.header__link {
+    color: variables.$color-white; // Texto branco por padrão
+    text-decoration: none; // Remove o sublinhado
+    font-size: variables.$font-size-base; // Tamanho de fonte padrão
+    font-weight: bold; // Negrito para destaque
+    margin-right: variables.$spacing-medium; // Espaçamento entre os links
+    transition: color 0.3s ease; // Transição suave para o hover
+
+    &:last-child {
+        margin-right: 0; // Remove o espaçamento do último link
+    }
+
+    &:hover {
+        color: variables.$color-red; // Muda a cor para vermelho ao passar o mouse
+    }
+}
+
+.inicio {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    @include mixins.background-image(variables.$image-background);
+
+    &__esquerda {
+        flex: 1;
+        @include mixins.center-flex;
+        color: variables.$color-white;
+        font-family: variables.$font-family-base;
+
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            color: variables.$color-white;
+            opacity: 0; // Inicialmente invisível
+            transform: translateX(-100%); // Começa fora da tela à esquerda
+            transition: color 0.3s ease-in-out;
+
+            &.visible {
+                opacity: 1; // Visível após a animação
+                transform: translateX(0); // Posição final
+            }
+
+            &.animate-title {
+                animation: slide-in-title 0.5s ease-out forwards; // Animação para o título
+            }
+
+            &:hover {
+                color: variables.$color-red; // Muda para vermelho ao passar o mouse
+            }
+        }
+    }
+
+    &__direita {
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+        @include mixins.center-flex;
+    
+        .modal {
+            @include mixins.modal(425px, auto, rgba(0, 0, 0, 0.8), variables.$border-radius); // Reduzimos de 500px para 425px (15%)
+            padding: calc(variables.$spacing-large * 0.85); // Reduzimos o padding em 15%
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: absolute;
+            opacity: 0; // Inicialmente invisível
+            transform: translateX(100%); // Começa fora da tela à direita
+    
+            &.visible {
+                opacity: 1; // Visível após a animação
+                transform: translateX(0); // Posição final
+            }
+    
+            &.animate-modal {
+                animation: slide-in-modal 0.5s ease-out forwards; // Animação para o modal
+            }
+    
+            &__titulo {
+                font-size: calc(1.5rem * 0.85); // Reduzimos o tamanho da fonte em 15%
+                color: variables.$color-white;
+                margin-bottom: calc(variables.$spacing-large * 0.85); // Reduzimos o espaçamento inferior em 15%
+                text-align: center;
+            }
+    
+            &__form {
+                width: 100%; // Mantemos a largura total do formulário
+                display: flex;
+                flex-direction: column;
+                gap: calc(variables.$spacing-medium * 0.85); // Reduzimos o espaçamento entre os elementos em 15%
+    
+                input,
+                textarea {
+                    width: 100%; // Mantemos a largura total dos campos
+                    padding: calc(variables.$spacing-medium * 0.85); // Reduzimos o padding em 15%
+                    border: 1px solid variables.$color-gray;
+                    border-radius: variables.$border-radius;
+                    background-color: variables.$color-white;
+                    color: variables.$color-black;
+                    font-size: calc(variables.$font-size-base * 0.85); // Reduzimos o tamanho da fonte em 15%
+    
+                    &:focus {
+                        outline: 2px solid variables.$color-red;
+                    }
+                }
+    
+                textarea {
+                    resize: none;
+                    height: calc(100px * 0.85); // Reduzimos a altura do textarea em 15%
+                }
+            }
+    
+            &__botao {
+                width: 100%; // Mantemos a largura dos botões
+                padding: calc(variables.$spacing-medium * 0.85); // Reduzimos o padding em 15%
+                border: none;
+                border-radius: variables.$border-radius;
+                font-size: calc(variables.$font-size-base * 0.85); // Reduzimos o tamanho da fonte em 15%
+                font-weight: bold;
+                cursor: pointer;
+                transition: opacity 0.3s ease;
+    
+                &:hover {
+                    opacity: 0.9;
+                }
+    
+                &--cinza {
+                    background-color: variables.$color-gray;
+                    color: variables.$color-white;
+                }
+    
+                &--verde {
+                    background-color: #25D366; // Verde do WhatsApp
+                    color: variables.$color-white;
+                }
+            }
+        }
+    }
+}
+
+// Animação de deslizar da esquerda para o centro (para o título)
+@keyframes slide-in-title {
+    to {
+        transform: translateX(0); // Move para o centro
+        opacity: 1; // Totalmente visível
+    }
+}
+
+// Animação de deslizar da direita para o centro (para o modal)
+@keyframes slide-in-modal {
+    to {
+        transform: translateX(0); // Move para o centro
+        opacity: 1; // Totalmente visível
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0; // Começa invisível
+        transform: scale(0.9); // Leve redução no tamanho
+    }
+    to {
+        opacity: 1; // Totalmente visível
+        transform: scale(1); // Escala normal
+    }
+}
+
+.galeria {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: variables.$spacing-large;
+    min-height: 100vh; // Ocupa 100% da altura da tela
+    text-align: center;
+    position: relative; // Define a seção como contêiner de referência
+
+    // Corrigido para manter o background fixo
+    @include mixins.background-image(variables.$image-background);
+    background-attachment: fixed; // Garante que o fundo fique fixo ao scrollar
+    background-position: center; // Centraliza o fundo
+    background-size: cover; // Faz o fundo cobrir toda a seção
+
+    // Fundo preto semitransparente
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); // Fundo preto semitransparente
+        z-index: 1; // Define o fundo preto acima da imagem de fundo
+    }
+
+    &__conteudo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 800px;
+        padding: variables.$spacing-large;
+        border-radius: variables.$border-radius;
+        gap: variables.$spacing-medium;
+        position: relative;
+        z-index: 2; // Garante que o conteúdo fique acima do fundo preto
+
+        // Adiciona a animação de fade-in
+        &.hidden {
+            opacity: 0; // Invisível
+            transform: scale(0.9); // Levemente reduzido
+            transition: opacity 0.5s ease, transform 0.5s ease; // Transição suave
+        }
+
+        &.visible {
+            animation: fade-in 0.5s ease forwards; // Aplica a animação
+        }
+    }
+
+    &__titulo {
+        font-size: 2.5rem;
+        color: variables.$color-white;
+
+        &:hover {
+            color: variables.$color-red; // Muda para vermelho ao passar o mouse
+            transition: color 0.3s ease-in-out; // Transição suave
+        }
+    }
+
+    &__texto {
+        font-size: variables.$font-size-base;
+        color: variables.$color-white; 
+        line-height: 1.5;
+
+        strong {
+            color: variables.$color-white; 
+        }
+    }
+
+    &__modal {
+        @include mixins.modal(80%, 80vh, variables.$color-white, variables.$border-radius); // Usa o mixin para estilizar o modal
+        margin-top: variables.$spacing-large;
+        width: 180%; // Largura fixa do modal
+        height: 120vh; // Altura fixa do modal
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        overflow: hidden;
+        position: relative;
+        background-color: rgba(255, 255, 255, 0.8); // Fundo preto semitransparente
+
+        &__grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); // 3 colunas
+            grid-auto-rows: 1fr; // Cada linha terá a mesma altura
+            gap: variables.$spacing-medium; // Espaçamento entre as imagens
+            width: 100%; // O grid ocupa toda a largura do modal
+            height: 100%; // O grid ocupa toda a altura do modal
+            box-sizing: border-box; // Garante que o espaçamento não afete o tamanho do grid
+            overflow: hidden; // Garante que o conteúdo do grid não vaze
+        }
+    
+        &__imagem {
+            @include mixins.square-image(100%); // Torna as imagens quadradas
+            width: 100%; // Cada célula do grid ocupa 100% do espaço
+            height: auto; // Altura proporcional
+        }
+    }
+
+    &.hidden {
+        opacity: 0; // Invisível
+        transform: scale(0.9); // Levemente reduzido
+        transition: opacity 0.5s ease, transform 0.5s ease; // Transição suave
+    }
+
+    &.visible {
+        animation: fade-in 0.5s ease forwards; // Aplica a animação
+    }
+}
+
+.galeria__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); // Cria 3 colunas
+    grid-template-rows: repeat(4, 1fr); // Cria 3 linhas
+    gap: variables.$spacing-medium; // Espaçamento entre as células do grid
+    width: 100%; // O grid ocupa toda a largura do modal
+    height: 100%; // O grid ocupa toda a altura do modal
+    box-sizing: border-box; // Garante que o espaçamento não afete o tamanho do grid
+    overflow: hidden; // Evita que o conteúdo do grid vaze
+
+    // Aplica as imagens dinamicamente às células do grid
+    & > div:nth-child(1) {
+        background-image: url('/images/foto1.jpg');
+    }
+    & > div:nth-child(2) {
+        background-image: url('/images/foto2.jpg');
+    }
+    & > div:nth-child(3) {
+        background-image: url('/images/foto3.jpg');
+    }
+    & > div:nth-child(4) {
+        background-image: url('/images/foto4.jpg');
+    }
+    & > div:nth-child(5) {
+        background-image: url('/images/foto5.jpg');
+    }
+    & > div:nth-child(6) {
+        background-image: url('/images/foto6.jpg');
+    }
+    & > div:nth-child(7) {
+        background-image: url('/images/foto7.jpg');
+    }
+    & > div:nth-child(8) {
+        background-image: url('/images/foto8.jpg');
+    }
+    & > div:nth-child(9) {
+        background-image: url('/images/foto9.jpg');
+    }
+    & > div:nth-child(10) {
+        background-image: url('/images/foto10.jpg');
+    }
+    & > div:nth-child(11) {
+        background-image: url('/images/foto11.jpg');
+    }
+    & > div:nth-child(12) {
+        background-image: url('/images/foto12.jpg');
+    }
+
+    // Estilo das imagens no grid
+    & > div {
+        background-size: cover; // Faz a imagem preencher o espaço
+        background-position: center; // Centraliza a imagem
+        background-repeat: no-repeat; // Remove repetições
+        cursor: pointer; // Mostra o cursor de clique
+        border-radius: variables.$border-radius; // Opcional: bordas arredondadas
+        transition: transform 0.3s ease;
+
+        &:hover {
+            transform: scale(1.05); // Aplica um zoom suave ao passar o mouse
+        }
+    }
+}
+
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); // Fundo semitransparente
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; // Garante que fique acima de todo o conteúdo
+    opacity: 0; // Inicialmente invisível
+    visibility: hidden; // Esconde o lightbox
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+
+    &.visible {
+        opacity: 1; // Torna visível
+        visibility: visible; // Mostra o lightbox
+    }
+
+    &__content {
+        position: relative;
+        max-width: 90%; // Limita a largura da imagem a 90% da tela
+        max-height: 90%; // Limita a altura da imagem a 90% da tela
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__image {
+        max-width: 50%; // Reduz a largura máxima para 80% da viewport
+        max-height: 50%; // Reduz a altura máxima para 80% da viewport
+        transition: transform 0.3s ease, opacity 0.3s ease; // Suaviza a transição ao abrir
+        transform: scale(0.9); // Inicialmente levemente reduzida
+        opacity: 0; // Inicialmente invisível
+    }
+
+    &.visible &__image {
+        transform: scale(1); // Quando o lightbox está visível, retorna ao tamanho normal
+        opacity: 1; // Torna a imagem visível
+    }
+
+    &__close {
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        background-color: red;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1001; // Garante que fique sobre a imagem
+    }
+
+    &__prev, &__next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(255, 255, 255, 0.5);
+        border: none;
+        color: black;
+        font-size: 24px;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+    }
+
+    &__prev {
+        left: -60px; // Botão anterior à esquerda da imagem
+    }
+
+    &__next {
+        right: -60px; // Botão próximo à direita da imagem
+    }
+}
+
+@keyframes slide-in-up {
+    from {
+        transform: translateY(100%); // Começa fora da página (abaixo)
+        opacity: 0; // Invisível
+    }
+    to {
+        transform: translateY(0); // Move para dentro da página
+        opacity: 1; // Totalmente visível
+    }
+}
+
+.footer {
+    // Estilos gerais do rodapé
+    position: relative;
+    padding: variables.$spacing-large;
+    color: variables.$color-white;
+    z-index: 1;
+    overflow: hidden; // Esconde qualquer conteúdo fora dos limites do rodapé
+
+    // Adicionando a imagem de fundo (sem animação)
+    @include mixins.background-image(variables.$image-background);
+    background-attachment: fixed; // Fundo fixo
+    background-position: center; // Centraliza o fundo
+    background-size: cover; // Faz o fundo cobrir toda a seção
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(64, 64, 64, 0.8); // Fundo cinza semitransparente
+        z-index: -1; // Overlay cinza atrás do conteúdo
+    }
+
+    // Wrapper do conteúdo interno
+    &__content {
+        display: flex; // Organiza as colunas com Flexbox
+        justify-content: space-between; // Espaçamento uniforme entre as colunas
+        align-items: center; // Alinha verticalmente
+        flex-wrap: wrap; // Permite reorganização em telas menores
+        width: 100%; // Garante que o wrapper ocupe toda a largura do rodapé
+        transform: translateY(100%); // Começa fora da tela
+        opacity: 0; // Invisível no início
+        animation: slide-in-up 1.2s ease forwards; // Aplica a animação suave ao conteúdo
+
+        &.hidden {
+            animation: none; // Remove a animação quando oculto
+            transform: translateY(100%); // Mantém fora da tela
+            opacity: 0; // Invisível
+        }
+
+        &.visible {
+            animation: slide-in-up 1.2s ease forwards; // Aplica a animação ao entrar
+        }
+    }
+    
+    &__left {
+        flex: 1; // Ocupa 1/3 do espaço
+        min-width: 200px; // Largura mínima ajustada
+        max-width: 400px; // Garante que o mapa seja quadrado
+        height: 200px; // Altura fixa
+        iframe {
+            width: 100%; // Preenche o container
+            height: 100%; // Preenche o container
+            border-radius: variables.$border-radius; // Opcional: bordas arredondadas
+        }
+    }
+
+    &__center {
+        flex: 1; // Ocupa 1/3 do espaço
+        text-align: center;
+    
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: variables.$spacing-small;
+            color: variables.$color-white; // Define a cor branca para o título
+        }
+    
+        p {
+            margin: variables.$spacing-small 0;
+            font-size: variables.$font-size-base;
+    
+            strong {
+                color: variables.$color-white;
+            }
+        }
+    }
+
+    &__right {
+        display: block; // Remove dependência de comportamento flexível
+        width: 249px; // Largura fixa
+        height: 249px; // Altura fixa (igual à largura para garantir um quadrado perfeito antes de torná-lo redondo)
+        background-image: url(variables.$image-higor-leal); // Define a imagem via variável
+        background-size: cover; // Faz a imagem preencher todo o container
+        background-position: center; // Centraliza a imagem no container
+        background-repeat: no-repeat; // Garante que a imagem não seja repetida
+        box-shadow: variables.$box-shadow; // Adiciona uma sombra sutil para destaque
+        margin: 0 auto; // Centraliza o container horizontalmente (se necessário)
+    
+        // Tornando o container redondo
+        border-radius: 50%; // Faz o container ser redondo
+        overflow: hidden; // Garante que a imagem seja cortada no formato circular
+    }
+}

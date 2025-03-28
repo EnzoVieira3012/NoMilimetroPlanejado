@@ -1,0 +1,283 @@
+@use "dashboard"; // Importa os estilos da Dashboard
+@use "../mixins" as mixins;
+@use "../variables" as variables;
+
+/* Isolando todas as regras dentro do escopo .clientes-perfil-layout */
+.clientes-perfil-layout {
+    .dashboard-content__image {
+        opacity: 1 !important;
+        transform: translate(-50%, -50%) scale(1) !important; /* Combina as transformações */
+        animation: none !important; /* Remove qualquer animação */
+        filter: blur(10px);
+
+        /* Faz a imagem acompanhar o scroll */
+        position: fixed; /* A imagem será fixa em relação à viewport */
+        top: 50%; /* Centraliza verticalmente */
+        left: 50%; /* Centraliza horizontalmente */
+        z-index: -1; /* Mantém a imagem atrás do conteúdo */
+    }
+
+// Container pai relativo para os modais
+.clientes-modais {
+    position: relative; // O container pai é relativo para que os modais se alinhem dentro dele
+}
+
+/* Estilos genéricos para todos os modais */
+.modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    gap: 20px;
+    z-index: 10;
+}
+
+.modal-content {
+    width: 80vw;
+    min-height: 100px;
+    max-height: 450px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px; /* Substitua variables.$border-radius */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Substitua variables.$box-shadow */
+    padding: 30px 20px;
+    box-sizing: border-box;
+    position: relative;
+    text-align: center;
+    font-size: 16px; /* Substitua variables.$font-size-base */
+    color: #000; /* Substitua variables.$color-black */
+}
+
+/* Fundo dos modais */
+.modal-add-user-comment .modal-content,
+.modal-user-comments .modal-content {
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para destaque */
+    padding: 20px; /* Espaçamento interno */
+    opacity: 1; /* Garante que o modal não esteja desbotado */
+    display: flex; /* Garante que os elementos internos respeitem o layout flex */
+    flex-direction: column; /* Elementos empilhados verticalmente */
+    align-items: center; /* Centraliza o conteúdo no modal */
+    gap: 16px; /* Espaçamento entre os elementos internos */
+}
+
+/* Garantir que o modal esteja visível */
+.modal-add-user-comment,
+.modal-user-comments {
+    z-index: 10; /* Coloca o modal acima de outros elementos */
+}
+
+/* Estilos do modal de adicionar comentário */
+.modal-add-user-comment .modal-content form {
+    display: flex;
+    flex-direction: column; /* Disposição vertical */
+    gap: 16px; /* Espaçamento entre os elementos do formulário */
+    width: 100%; /* O formulário ocupa toda a largura do modal */
+    margin-top: 20px; /* Espaçamento superior */
+}
+
+/* Campo de texto */
+.modal-add-user-comment textarea {
+    width: 100%; /* O textarea ocupa toda a largura disponível */
+    height: 150px; /* Altura fixa */
+    padding: 8px; /* Espaçamento interno */
+    border: 1px solid #ccc; /* Borda cinza */
+    border-radius: 8px; /* Bordas arredondadas */
+    font-size: 16px; /* Tamanho da fonte */
+    resize: none; /* O usuário não pode redimensionar o campo */
+    color: #000; /* Cor do texto */
+}
+
+.modal-add-user-comment textarea:focus {
+    outline: 2px solid red; /* Contorno vermelho ao focar */
+}
+
+/* Botão de salvar */
+.modal-add-user-comment button.clientes-save-button {
+    background-color: red; /* Fundo vermelho */
+    color: white; /* Texto branco */
+    border: none;
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 10px 20px; /* Espaçamento interno */
+    font-size: 16px; /* Tamanho da fonte */
+    font-weight: bold; /* Negrito */
+    cursor: pointer; /* Aponta que é clicável */
+    transition: all 0.3s ease; /* Suaviza animações */
+}
+
+.modal-add-user-comment button.clientes-save-button:hover {
+    background-color: #ccc; /* Fundo cinza ao passar o mouse */
+}
+
+.modal-add-user-comment button.clientes-save-button:focus {
+    outline: 2px solid red; /* Contorno vermelho ao focar */
+}
+
+/* Estilos do modal de exibir comentários */
+.modal-user-comments .modal-content {
+    width: 80vw !important; /* Força a largura para 80% da viewport */
+    min-height: 100px; /* Altura mínima */
+    max-height: 450px; /* Altura máxima */
+    background-color: rgba(255, 255, 255, 0.9); /* Fundo branco com opacidade */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+    padding: 20px; /* Espaçamento interno */
+    overflow-y: auto; /* Habilita rolagem se o conteúdo exceder a altura */
+}
+
+/* Container dos comentários dentro do modal */
+.modal-user-comments #userCommentsContainer {
+    display: flex;
+    flex-direction: column; /* Disposição vertical dos comentários */
+    gap: 16px; /* Espaçamento entre os comentários */
+    width: 100%; /* O container ocupa toda a largura */
+    max-height: 300px; /* Altura máxima com rolagem se necessário */
+    overflow-y: auto; /* Habilita rolagem vertical */
+    padding: 8px; /* Espaçamento interno */
+}
+
+/* Estilo dos itens individuais de comentário */
+.modal-user-comments .comment-item {
+    width: 100%; /* Faz o item ocupar toda a largura do container */
+    padding: 8px; /* Espaçamento interno */
+    border: 1px solid #ccc; /* Borda cinza */
+    border-radius: 8px; /* Bordas arredondadas */
+    background-color: white; /* Fundo branco */
+    font-size: 16px; /* Tamanho da fonte */
+    color: #000; /* Cor do texto */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+    resize: none; /* Não permite redimensionar */
+    overflow-y: auto; /* Habilita rolagem se o texto for muito grande */
+    height: auto; /* Ajusta a altura com base no conteúdo */
+    min-height: 50px; /* Altura mínima */
+}
+
+/* Espaçamento entre os itens de comentários */
+.modal-user-comments .comment-item:not(:last-child) {
+    margin-bottom: 8px; /* Espaçamento abaixo de cada item, exceto o último */
+}
+
+/* Estilos do modal de clientes */
+.clientes-modal .modal-fields {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 16px; /* Espaçamento entre os inputs */
+}
+
+.clientes-modal .modal-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Espaçamento entre o label e o input */
+    margin-bottom: 16px; /* Margem inferior entre seções */
+}
+
+.clientes-modal .modal-section label {
+    font-size: 16px;
+    color: #000;
+    text-align: left;
+}
+
+.clientes-modal .modal-section input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.clientes-modal .modal-section input:focus {
+    outline: 2px solid red; /* Destaque ao focar no input */
+}
+
+.clientes-modal .readonly-field {
+    background-color: rgba(255, 255, 255, 0.9); /* Fundo semi-transparente */
+    width: 100%;
+    height: 150px;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    resize: none; /* Desabilita redimensionamento */
+    color: #000;
+}
+
+.clientes-modal .readonly-field:focus {
+    outline: none;
+}
+
+/* Estilos para os botões Salvar e Excluir */
+.clientes-actions {
+    display: flex;
+    justify-content: space-between; /* Coloca os botões nas extremidades */
+    gap: 16px; /* Espaçamento entre os botões */
+    margin-top: 20px; /* Espaço acima dos botões */
+}
+
+.clientes-save-button, .clientes-delete-button {
+    flex: 1; /* Faz os botões terem o mesmo tamanho */
+    text-align: center;
+    padding: 10px 20px; /* Espaçamento interno */
+    font-size: 16px; /* Tamanho da fonte */
+    font-weight: bold; /* Negrito */
+    border-radius: 8px; /* Bordas arredondadas */
+    border: none; /* Remove a borda padrão */
+    cursor: pointer; /* Cursor de "mãozinha" ao passar nos botões */
+    transition: all 0.3s ease; /* Suaviza as transições */
+}
+
+/* Estilo do botão "Salvar" */
+.clientes-save-button {
+    background-color: #4CAF50; /* Fundo verde */
+    color: white; /* Texto branco */
+}
+
+.clientes-save-button:hover {
+    background-color: #45a049; /* Fundo verde escuro ao passar o mouse */
+}
+
+.clientes-save-button:focus {
+    outline: 2px solid #4CAF50; /* Contorno verde ao focar */
+}
+
+/* Estilo do botão "Excluir" */
+.clientes-delete-button {
+    background-color: #ff4d4d; /* Fundo vermelho */
+    color: white; /* Texto branco */
+}
+
+.clientes-delete-button:hover {
+    background-color: #cc0000; /* Fundo vermelho escuro ao passar o mouse */
+}
+
+.clientes-delete-button:focus {
+    outline: 2px solid #ff0000; /* Contorno vermelho ao focar */
+}
+
+// Ajuste do modal de comentários para que fique abaixo do primeiro modal
+.clientes-modal.comentarios-modal {
+    position: absolute;
+    top: calc(100% - 80px);
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+// Ajuste do terceiro modal
+.modal.modal-add-user-comment {
+    position: absolute;
+    top: calc(100% + 40px + variables.$modal-spacing); // Use o namespace
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+// Ajuste do quarto modal
+.modal.modal-user-comments {
+    position: absolute;
+    top: calc(100% + 320px + (2 * variables.$modal-spacing)); // Use o namespace
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+}

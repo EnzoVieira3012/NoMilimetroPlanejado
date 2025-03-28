@@ -1,0 +1,49 @@
+@use 'variables'; // Importa variáveis globais
+
+// Reset de CSS
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+// Estilos globais
+html {
+    font-size: variables.$font-size-base; // Base para REM
+    height: 100%; // Garante que o HTML ocupe toda a altura
+    overflow: auto; // Remove o scroll do HTML
+}
+
+body {
+    font-family: variables.$font-family-base; // Fonte padrão
+    font-size: variables.$font-size-base; // Tamanho base
+    background-color: variables.$background-color; // Fundo branco
+    color: variables.$color-gray; // Texto cinza escuro
+    line-height: 1.5;
+    padding: 0;
+    margin: 0;
+    height: 100%; // Garante que o body ocupe toda a altura
+    overflow: auto; // Desativa o scroll do body também
+}
+
+// Tipografia
+h1, h2, h3, h4, h5, h6 {
+    font-family: variables.$font-family-base;
+    font-size: variables.$font-size-heading;
+    color: variables.$color-black;
+    margin-bottom: variables.$spacing-medium;
+}
+
+p {
+    margin-bottom: variables.$spacing-medium;
+    color: variables.$color-gray;
+}
+
+a {
+    text-decoration: none;
+    color: variables.$color-black;
+
+    &:hover {
+        color: variables.$color-gray;
+    }
+}

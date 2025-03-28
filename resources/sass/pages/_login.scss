@@ -1,0 +1,151 @@
+@use '../variables';
+@use '../mixins';
+
+.login {
+    // Todos os estilos do Login ficam aqui
+    background-color: variables.$color-black; // Fundo preto
+    min-height: 100vh; // Garante que a página ocupe toda a altura da tela
+    position: relative; // Define o login como contêiner de referência
+    overflow: hidden; // Remove as barras de rolagem
+
+    &__image {
+        position: absolute; // Para posicionar a imagem manualmente
+        top: 50%; // Centraliza verticalmente
+        left: calc((100% - 400px) / 3); // Ajuste mais fino para centralização exata
+        transform: translateY(-50%); // Ajusta o centro verticalmente
+        width: 300px; // Largura fixa da imagem
+        height: 300px; // Altura fixa
+        background-image: url(variables.$image-login); // Insere a imagem como fundo
+        background-size: contain; // Faz com que a imagem se ajuste ao contêiner
+        background-repeat: no-repeat; // Evita repetição da imagem
+        background-position: center; // Centraliza a imagem no contêiner
+
+        // Configuração inicial da animação
+        opacity: 0; // Começa invisível
+        animation: fade-in 1s ease-in-out forwards; // Aplica a animação de fade-in
+    }
+
+    &__modal {
+        @include mixins.modal(400px, 100vh, variables.$color-white, 0);
+        position: absolute; // Para fixar o modal no canto direito
+        top: 0; // Alinhado ao topo
+        right: 0; // Alinhado à direita
+        display: flex;
+        flex-direction: column; // Organiza o conteúdo do modal em coluna
+        align-items: center; // Centraliza o conteúdo horizontalmente
+        padding: variables.$spacing-large; // Espaçamento interno
+
+        // Configuração inicial da animação
+        transform: translateX(100%); // Começa fora da tela (à direita)
+        animation: slide-in 1s ease forwards; // Aplica a animação de slide-in
+
+        &__close {
+            @include mixins.button(variables.$color-black, variables.$color-white);
+            position: absolute; // Posiciona no canto superior direito
+            top: variables.$spacing-small; // Espaçamento superior
+            right: variables.$spacing-small; // Espaçamento à direita
+            width: 32px; // Largura do botão
+            height: 32px; // Altura do botão
+            display: flex;
+            justify-content: center; // Centraliza o "x"
+            align-items: center; // Centraliza o "x"
+            font-size: variables.$font-size-base; // Tamanho da fonte
+            font-weight: bold; // Texto em negrito
+            text-decoration: none; // Remove sublinhado
+            z-index: 10; // Garante que fique acima de outros elementos
+        }
+
+        &__titulo {
+            font-size: 1.5rem;
+            color: variables.$color-black;
+            margin-bottom: variables.$spacing-medium;
+            text-align: center;
+        }
+
+        &__form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: variables.$spacing-medium;
+
+            input {
+                width: 100%;
+                padding: variables.$spacing-medium;
+                border: 1px solid variables.$color-gray;
+                border-radius: variables.$border-radius;
+                background-color: variables.$color-white;
+                color: variables.$color-black;
+                font-size: variables.$font-size-base;
+
+                &:focus {
+                    outline: 2px solid variables.$color-red;
+                }
+            }
+        }
+
+        &__link {
+            text-decoration: none;
+            color: variables.$color-black;
+            font-size: variables.$font-size-base;
+            text-align: center;
+
+            &:hover {
+                color: variables.$color-red;
+            }
+        }
+
+        &__botao {
+            @include mixins.button(variables.$color-gray, variables.$color-white);
+            width: 100%;
+            font-size: variables.$font-size-base;
+            font-weight: bold;
+
+            // Ajuste no padding para aumentar o tamanho do botão
+            padding: calc(variables.$spacing-medium * 1.5); // Aumenta o espaçamento interno
+
+            &--cinza {
+                @include mixins.button(variables.$color-gray, variables.$color-white);
+            }
+
+            &--verde {
+                @include mixins.button(#25D366, variables.$color-white); // Verde do WhatsApp
+            }
+        }
+
+        &__texto {
+            margin-top: variables.$spacing-medium;
+            text-align: center;
+            font-size: variables.$font-size-base;
+            color: variables.$color-black;
+
+            a {
+                text-decoration: none;
+                color: variables.$color-red;
+
+                &:hover {
+                    color: variables.$color-gray;
+                }
+            }
+        }
+    }
+
+    // Definição da animação de fade-in para a imagem
+    @keyframes fade-in {
+        from {
+            opacity: 0; // Totalmente transparente
+        }
+        to {
+            opacity: 1; // Totalmente visível
+        }
+    }
+
+    // Definição da animação de slide-in para o modal
+    @keyframes slide-in {
+        from {
+            transform: translateX(100%); // Começa fora da tela (direita)
+        }
+        to {
+            transform: translateX(0); // Posição final (dentro da tela)
+        }
+    }
+}
